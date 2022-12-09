@@ -126,17 +126,17 @@ fn determine_scores(forest: &Vec<Vec<u32>>) -> Vec<Vec<u32>> {
                 }
             };
 
-            if x == 3 && y == 2 {
-                let debug_location = dbg!((x, y, tree));
-                let debug_score = dbg!(
-                    n_visible_left,
-                    n_visible_right,
-                    n_visible_down,
-                    n_visible_up,
-                    n_visible_left * n_visible_right * n_visible_down * n_visible_up
-                );
-                let debug_list = dbg!(visible_left, visible_right, visible_down, visible_up,);
-            }
+            // if x == 3 && y == 2 {
+            //     let debug_location = dbg!((x, y, tree));
+            //     let debug_score = dbg!(
+            //         n_visible_left,
+            //         n_visible_right,
+            //         n_visible_down,
+            //         n_visible_up,
+            //         n_visible_left * n_visible_right * n_visible_down * n_visible_up
+            //     );
+            //     let debug_list = dbg!(visible_left, visible_right, visible_down, visible_up,);
+            // }
 
             let score = (n_visible_left * n_visible_right * n_visible_down * n_visible_up);
             row_scores.push(score as u32);
