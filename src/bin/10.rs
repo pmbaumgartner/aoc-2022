@@ -64,14 +64,12 @@ pub fn part_one(input: &str) -> Option<i32> {
         if let Some(instruction) = instruction {
             operations_queue.push_back(instruction.into());
         }
-        dbg!(&cycle);
         if operations_queue.is_empty() {
             break;
         }
         let mut operation = operations_queue.pop_front().unwrap();
         operation.cycles -= 1;
 
-        dbg!(cycle, &operation, register.history.last());
         if operation.complete() {
             let value = operation.value;
             let history = register.history.last().unwrap_or(&1);
@@ -85,7 +83,7 @@ pub fn part_one(input: &str) -> Option<i32> {
     }
     let mut sum = 0;
     for cycle in (1..register.history.len()).skip(19).step_by(40) {
-        let reg_value = dbg!(register.history.get(cycle - 2).unwrap());
+        let reg_value = register.history.get(cycle - 2).unwrap();
         sum += reg_value * cycle as i32;
     }
 
