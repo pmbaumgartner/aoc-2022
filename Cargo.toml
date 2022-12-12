@@ -9,5 +9,6 @@ publish = false
 
 [dependencies]
 num = "0.4.0"
+pathfinding = "4.0.0"
 pico-args = "0.5.0"
 regex = "1.7.0"
