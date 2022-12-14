@@ -14,14 +14,9 @@ fn parse_input(input: &str) -> Vec<(u64, u64)> {
             .map(|s| s.split(',').collect::<Vec<_>>())
             .map(|v| (v[0].parse::<u64>().unwrap(), v[1].parse::<u64>().unwrap()))
             .collect::<Vec<_>>();
-        // iterate through each pair of endpoints using the window method
         for pair in endpoints.windows(2) {
             let (x1, y1) = pair[0];
             let (x2, y2) = pair[1];
-            // add the locations to the list
-            // remember that lines can go up, down, left, or right,
-            // so we can't just use a range iterator without finding
-            // the lowest value first
             match (x1.cmp(&x2), y1.cmp(&y2)) {
                 (Ordering::Equal, Ordering::Less) => {
                     for y in y1..=y2 {
@@ -69,34 +64,10 @@ impl Cave {
     }
 
     fn fill_sand(&mut self, floor: u64, criteria: StoppingCriteria) -> u64 {
-        // move the sand through the cave with the following rules:
-        // Sand starts at 500, 0
-        //
-        // Sand is produced one unit at a time, and the next unit of
-        // sand is not produced until the previous unit of sand comes to rest.
-        //  A unit of sand is large enough to fill one tile of air in your scan.
-        //
-        // A unit of sand always falls down one step if possible. If the tile
-        // immediately below is blocked (by rock or sand), the unit of sand
-        // attempts to instead move diagonally one step down and to the left.
-        // If that tile is blocked, the unit of sand attempts to instead move
-        // diagonally one step down and to the right. Sand keeps moving as
-        // long as it is able to do so, at each step trying to move down,
-        // then down-left, then down-right. If all three possible destinations
-        // are blocked, the unit of sand comes to rest and no longer moves,
-        // at which point the next unit of sand is created back at the source.
-        //
-        // Eventually the sand will fall off the bottom of the cave,
-        // i.e. it will 'fall' to a location that is larger than the cave.
-        // we want to track the number units of sand that were created
-        // before this happens
         let mut sand_count: u64 = 0;
         let mut x: i64 = 500;
         let mut y = 0;
         loop {
-            // println!("x: {}, y: {}, sand_count: {}", x, y, sand_count);
-            // check if y is larger than the cave
-
             match criteria {
                 Overflow => {
                     if y + 1 >= self.height {
@@ -104,7 +75,6 @@ impl Cave {
                     }
                 }
                 Spout => {
-                    // check if this y position is one level above the height + floor
                     if y + 1 == self.height + floor {
                         self.objects.insert((x, y));
                         x = 500;
@@ -143,7 +113,6 @@ impl Cave {
                 }
             }
         }
-        sand_count
     }
 }
 
