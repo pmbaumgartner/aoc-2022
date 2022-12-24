@@ -105,10 +105,8 @@ pub fn part_two(input: &str) -> Option<u32> {
     //     Dot::with_config(&inverted_graph, &[Config::EdgeNoLabel])
     // );
     // use tarjans algorithm to find the number of connected components
-    // let ivg = inverted_graph.into_graph::<u32>();
     let scc = tarjan_scc(&inverted_graph);
     // get components after the first (largest) one
-    // let non_outer_component =
     // println!("{:?}", scc);
     // for component in scc.iter() {
     //     println!("sc len: {:?}", component.len());
@@ -127,10 +125,7 @@ pub fn part_two(input: &str) -> Option<u32> {
         .nodes()
         .map(|node| 6 - graph.edges(node).count() as u32)
         .sum::<u32>();
-    // dbg!(all_surface);
-    // dbg!(removals);
     Some(all_surface - removals)
-    // None
 }
 
 fn main() {
